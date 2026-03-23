@@ -1,13 +1,31 @@
-from socket  import *
-from constCS import * #-
+from socket import *
+from constCS import *
+import time
 
 s = socket(AF_INET, SOCK_STREAM) 
-s.bind((HOST, PORT))  #-
-s.listen(1)           #-
-(conn, addr) = s.accept()  # returns new socket and addr. client 
-while True:                # forever
-  data = conn.recv(1024)   # receive data from client
-  if not data: break       # stop if client stopped
-  print(bytes.decode(data))
-  conn.send(str.encode(bytes.decode(data)+"*")) # return sent data plus an "*"
-conn.close()               # close the connection
+s.bind(('0.0.0.0', PORT)) 
+s.listen(1) 
+
+print("Servidor aguardando conexão...")
+(conn, addr) = s.accept() 
+
+while True: 
+    data = conn.recv(1024) 
+    if not data: break 
+    
+    mensagem = bytes.decode(data)
+    
+    if ":" in mensagem:
+        comando, conteudo = mensagem.split(":", 1)        
+        if comando == "MAIUSCULO":
+            resultado = conteudo.upper()
+        elif comando == "ASTERISCO":
+            resultado = conteudo + "*"
+        else:
+            resultado = "Operação desconhecida"
+    else:
+        resultado = "Erro: Formato de mensagem inválido"
+
+    conn.send(str.encode(resultado))
+
+conn.close()
