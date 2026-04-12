@@ -1,20 +1,19 @@
 from socket import *
 from constCS import *
 
-testes = [
-    "ASTERISCO:Olá mundo",
-    "MAIUSCULO:estou gritando no servidor"
-]
+s = socket(AF_INET, SOCK_STREAM)
+s.connect((HOST, PORT))
 
-for msg in testes:
-    s = socket(AF_INET, SOCK_STREAM)
-    s.connect((HOST, PORT))
-    
-    print(f"Enviando requisição: {msg}")
-    s.send(str.encode(msg)) 
-    
-    data = s.recv(1024) 
-    print(f"Resposta do servidor: {bytes.decode(data)}")
-    
-    s.close()
-    print("-" * 30)
+print("Calculadora remota — operacoes: add, subtract, multiply, divide")
+print("Formato: <operacao> <a> <b>   (ex: add 10 5)")
+print("Digite 'sair' para encerrar\n")
+
+while True:
+    msg = input(">>> ")
+    if msg.strip().lower() == "sair":
+        break
+    s.send(msg.encode())
+    data = s.recv(1024)
+    print(data.decode())
+
+s.close()
