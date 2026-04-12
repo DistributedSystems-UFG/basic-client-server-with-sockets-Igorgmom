@@ -1,10 +1,27 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/7EVNAYx2)
 # ClientServerBasics (2.0)
-Starter code for the basic client-server assignment
 
+Calculadora remota usando sockets TCP, baseada no exemplo da Fig. 2.3 do livro.
 
-Este template corresponde ao exemplo da Fig. 2.3 do livro. O exercício consiste em acrescentar funcionalidade ao servidor para torná-lo mais útil. Essa funcionalidade deve ser acessível aos clientes. Por exemplo, o servidor pode ser uma espécie de calculadora remota. O cliente passa dois valores numéricos, juntamente com o nome de uma operação (ex.: add, subtract, multiply, divide) e o servidor executa a operação respectiva e retorna seu resultado para o cliente. Você pode implementar um servidor com outras funcionalidades (diferente da calculadora). O imporante é que ele ofereça pelo menos três operações diferentes que os clientes podem utilizar remotamente, passando dados para serem processados e recebendo o resultado desse processamento como resposta.
+## Funcionalidades
 
-Tarefa individual.
+O servidor oferece 4 operações: `add`, `subtract`, `multiply` e `divide`.
 
-Incluir um Readme descritivo do sistema implementado.
+O cliente envia requisições no formato `<operacao> <a> <b>` e recebe o resultado. É possível fazer múltiplas chamadas sem reconectar.
+
+## Como executar
+
+1. Ajuste o IP/porta em `constCS.py`
+2. Inicie o servidor: `python server.py`
+3. Em outro terminal, inicie o cliente: `python client.py`
+
+## Exemplo
+
+```
+>>> add 10 5
+15.0
+>>> multiply 3 7
+21.0
+>>> divide 10 0
+Erro: divisao por zero
+>>> sair
+```
